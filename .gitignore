@@ -1,0 +1,24 @@
+# ---- Build rezultati ----
+[Bb]in/
+[Oo]bj/
+
+# ---- Visual Studio ----
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# ---- NuGet paketi (restore radi automatski u VS) ----
+packages/
+*.nupkg
+
+# ---- Entity Framework / LocalDB baze ----
+*.mdf
+*.ldf
+*.sdf
+
+# ---- Razno ----
+*.log
+[Ll]og/
+.DS_Store
+Thumbs.db
