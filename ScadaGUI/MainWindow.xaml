@@ -6,6 +6,7 @@
         Closing="Window_Closing">
     <Window.Resources>
         <conv:AlarmStatusToBrushConverter x:Key="AlarmBrush"/>
+        <conv:AlarmStatusToForegroundConverter x:Key="AlarmFg"/>
     </Window.Resources>
 
     <Grid>
@@ -80,6 +81,7 @@
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="{Binding Converter={StaticResource AlarmBrush}}"/>
+                            <Setter Property="Foreground" Value="{Binding Converter={StaticResource AlarmFg}}"/>
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>

@@ -35,7 +35,7 @@
             <TextBox   Grid.Row="2" Grid.Column="3" x:Name="MaxBox" Margin="0,3"/>
         </Grid>
 
-        <TextBlock DockPanel.Dock="Top" Foreground="Gray" Margin="0,6,0,6"
+        <TextBlock DockPanel.Dock="Top" Foreground="{DynamicResource MutedTextBrush}" Margin="0,6,0,6"
                    Text="Format vremena: yyyy-MM-dd HH:mm:ss. Prazno polje = uslov se ignorise."/>
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">

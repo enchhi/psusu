@@ -152,6 +152,7 @@
     <Compile Include="MockData.cs" />
     <Compile Include="Converters\AlarmStatusToBrushConverter.cs" />
     <Compile Include="Converters\TimeConverter.cs" />
+    <Compile Include="Converters\AlarmStatusToForegroundConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

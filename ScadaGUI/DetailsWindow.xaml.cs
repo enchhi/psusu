@@ -68,7 +68,8 @@ namespace ScadaGUI
                 pad + (1 - (val - vmin) / range) * plotH;
 
             // linija istorije
-            var poly = new Polyline { Stroke = Brushes.SteelBlue, StrokeThickness = 1.5 };
+            var accent = (Application.Current.TryFindResource("AccentBrush") as Brush) ?? Brushes.SteelBlue;
+            var poly = new Polyline { Stroke = accent, StrokeThickness = 1.8 };
             for (int i = 0; i < samples.Count; i++)
                 poly.Points.Add(new Point(xOf(i), yOf(samples[i].Value)));
             ChartCanvas.Children.Add(poly);

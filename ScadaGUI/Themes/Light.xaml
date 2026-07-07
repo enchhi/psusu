@@ -14,4 +14,5 @@
     <SolidColorBrush x:Key="GridLineBrush" Color="#EDEFF7"/>
     <SolidColorBrush x:Key="SelectionBrush" Color="#E7E3FB"/>
     <SolidColorBrush x:Key="DisabledBrush" Color="#E7E8EE"/>
+    <SolidColorBrush x:Key="ScrollThumbBrush" Color="#C4C7D4"/>
 </ResourceDictionary>

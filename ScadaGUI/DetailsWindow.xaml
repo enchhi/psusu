@@ -23,8 +23,8 @@
             </DataGrid>
         </DockPanel>
 
-        <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
-            <Canvas x:Name="ChartCanvas" Background="White" ClipToBounds="True"/>
+        <Border Grid.Column="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6">
+            <Canvas x:Name="ChartCanvas" Background="{DynamicResource SurfaceBrush}" ClipToBounds="True"/>
         </Border>
     </Grid>
 </Window>
