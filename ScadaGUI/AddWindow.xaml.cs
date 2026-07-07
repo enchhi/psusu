@@ -47,6 +47,64 @@ namespace ScadaGUI
 
         private static Visibility Vis(bool b) => b ? Visibility.Visible : Visibility.Collapsed;
 
+        // Dev pomoc: popuni polja validnim nasumicnim podacima iz pool-a (vidi MockData).
+        private void Mock_Click(object sender, RoutedEventArgs e)
+        {
+            string t = SelectedType;
+            if (t == null) return;
+            if (t == "Alarm") { MockAlarm(); return; }
+
+            // Zajednicko: jedinstveno ime, opis i slobodna adresa za tip.
+            NameBox.Text = MockData.UniqueName(MockData.NamesFor(t), dc.Tags.Select(x => x.Name));
+            DescBox.Text = MockData.Pick(MockData.Descriptions);
+            if (Enum.TryParse(t, out TagType type))
+            {
+                string addr = MockData.FreeAddress(type, dc.Tags.Where(x => x.Type == type).Select(x => x.IOAddress));
+                if (addr != null) AddressCombo.SelectedItem = addr;
+            }
+
+            // Ulazni (AI/DI): scan time + on scan.
+            if (t == "AI" || t == "DI")
+            {
+                ScanTimeBox.Text = MockData.Pick(MockData.ScanTimes).ToString();
+                OnScanBox.IsChecked = true;
+            }
+
+            // Analogni (AI/AO): low < high, units; za AO i initial unutar opsega.
+            if (t == "AI" || t == "AO")
+            {
+                var lh = MockData.LowHigh();
+                double low = lh[0], high = lh[1];
+                LowBox.Text = low.ToString();
+                HighBox.Text = high.ToString();
+                UnitsBox.Text = MockData.Pick(MockData.Units);
+                if (t == "AO") InitialBox.Text = MockData.Double(low, high).ToString();
+            }
+
+            // Samo AI: deadband + hysteresis.
+            if (t == "AI")
+            {
+                DeadbandBox.Text = MockData.Pick(MockData.Deadbands).ToString();
+                HystBox.Text = MockData.Pick(MockData.Hystereses).ToString();
+            }
+
+            // DO: initial 0 ili 1.
+            if (t == "DO") InitialBox.Text = MockData.Bool() ? "1" : "0";
+        }
+
+        private void MockAlarm()
+        {
+            if (AlarmAiCombo.Items.Count == 0)
+            {
+                MessageBox.Show("Nema nijednog AI taga. Prvo dodaj AI da bi mock alarm imao na sta da se veze.");
+                return;
+            }
+            AlarmAiCombo.SelectedIndex = MockData.Int(0, AlarmAiCombo.Items.Count - 1);
+            LimitBox.Text = MockData.Double(10, 90).ToString();
+            DirectionCombo.SelectedIndex = MockData.Bool() ? 0 : 1;
+            AlarmMessageBox.Text = MockData.Pick(MockData.AlarmMessages);
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -16,6 +16,17 @@ namespace ScadaGUI
             ValueBox.Text = output.CurrentValue.ToString(CultureInfo.InvariantCulture);
         }
 
+        // Dev pomoc: predlozi validnu nasumicnu vrednost (DO -> 0/1, AO -> unutar opsega ako postoji).
+        private void Mock_Click(object sender, RoutedEventArgs e)
+        {
+            if (output.Type == TagType.DO)
+                ValueBox.Text = MockData.Bool() ? "1" : "0";
+            else if (output is AnalogOutput ao && ao.LowLimit < ao.HighLimit)
+                ValueBox.Text = MockData.Double(ao.LowLimit, ao.HighLimit).ToString();
+            else
+                ValueBox.Text = MockData.Double(0, 100).ToString();
+        }
+
         private void Write_Click(object sender, RoutedEventArgs e)
         {
             if (!double.TryParse(ValueBox.Text, out var v))

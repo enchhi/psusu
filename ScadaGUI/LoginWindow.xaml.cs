@@ -24,6 +24,15 @@ namespace ScadaGUI
             RoleCombo.SelectedIndex = 0; // Admin
         }
 
+        // Dev pomoc: nasumican NOV nalog (jedinstveno ime + validna jedinstvena lozinka + nasumicna uloga).
+        // Zgodno za testiranje registracije i read-only uloga (Operater/Student/Teacher).
+        private void Mock_Click(object sender, RoutedEventArgs e)
+        {
+            UsernameBox.Text = "user" + MockData.Int(1000, 9999);
+            PassBox.Password = MockData.Password();
+            RoleCombo.SelectedIndex = MockData.Int(0, RoleCombo.Items.Count - 1);
+        }
+
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             var roleText = (RoleCombo.SelectedItem as ComboBoxItem)?.Content?.ToString();

@@ -20,7 +20,10 @@
             <ComboBoxItem Content="Teacher"/>
         </ComboBox>
 
-        <Button Content="Prijava" Click="Login_Click" Height="32" IsDefault="True"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Prijava" Click="Login_Click" Height="32" Width="230" Margin="0,0,8,0" IsDefault="True"/>
+            <Button Content="Mock" Click="Mock_Click" Height="32" Width="90"/>
+        </StackPanel>
 
         <TextBlock Foreground="Gray" TextWrapping="Wrap" Margin="0,10,0,0"
                    Text="Novo korisnicko ime = registracija. Lozinka: min 15 karaktera, bar jedno veliko i malo slovo i specijalni karakter; ne sme postojati ista lozinka u bazi."/>

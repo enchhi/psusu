@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using DataConcentrator;
 
@@ -14,6 +15,20 @@ namespace ScadaGUI
         public FilterWindow()
         {
             InitializeComponent();
+        }
+
+        // Dev pomoc: popuni filter nasumicnim postojecim AI tagom i sirokim vremenskim opsegom.
+        // Vrednosti se ostave prazne (uslov se ignorise) da pretraga vrati sto vise rezultata.
+        private void Mock_Click(object sender, RoutedEventArgs e)
+        {
+            var aiNames = DataConcentratorService.Instance.Tags.OfType<AnalogInput>().Select(a => a.Name).ToList();
+            TagBox.Text = aiNames.Count > 0 ? MockData.Pick(aiNames) : "";
+
+            var now = DateTime.Now;
+            FromBox.Text = now.AddHours(-1).ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            ToBox.Text = now.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            MinBox.Text = "";
+            MaxBox.Text = "";
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
