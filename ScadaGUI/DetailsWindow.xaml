@@ -1,0 +1,18 @@
+<Window x:Class="ScadaGUI.DetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Detalji - alarmi" Height="320" Width="520"
+        WindowStartupLocation="CenterOwner">
+    <DockPanel Margin="8">
+        <TextBlock x:Name="HeaderText" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,8"/>
+        <DataGrid x:Name="AlarmsGrid" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Granica" Binding="{Binding LimitValue}"/>
+                <DataGridTextColumn Header="Smer" Binding="{Binding Direction}"/>
+                <DataGridTextColumn Header="Poruka" Binding="{Binding Message}" Width="*"/>
+                <DataGridTextColumn Header="Stanje" Binding="{Binding State}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>

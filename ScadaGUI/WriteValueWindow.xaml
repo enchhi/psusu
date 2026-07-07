@@ -1,0 +1,11 @@
+<Window x:Class="ScadaGUI.WriteValueWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Upis vrednosti" Height="170" Width="320"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="12">
+        <TextBlock x:Name="InfoText" TextWrapping="Wrap"/>
+        <TextBox x:Name="ValueBox" Margin="0,8,0,8"/>
+        <Button Content="Upisi" Click="Write_Click" Height="30"/>
+    </StackPanel>
+</Window>
