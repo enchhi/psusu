@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataConcentrator
 {
@@ -15,6 +16,10 @@ namespace DataConcentrator
         public double Deadband { get; set; }      // minimalna promena na koju se reaguje
         public double Hysteresis { get; set; }     // za paljenje/gasenje alarma bez treperenja
 
-        public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+        // Alarmi se NE mapiraju kao EF navigacija (izbegavamo shadow FK kolonu).
+        // Alarm entiteti se cuvaju u zasebnoj Alarms tabeli, a ova kolekcija se puni
+        // u servisu po TagName-u (Alarm.TagName == AnalogInput.Name).
+        [NotMapped]
+        public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
     }
 }
