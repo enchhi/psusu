@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataConcentrator
 {
-    // napraviti AnalogInput, AnalogOuput, DigitalInput i 
-    // DigitalOutput klase koje nasledjuju Tag klasu
-    public class Tag : INotifyPropertyChanged
+    // Bazna klasa za sve tagove. EF mapiranje: Table-Per-Hierarchy (jedna tabela Tags).
+    // Naslednici: AnalogInput, AnalogOutput, DigitalInput, DigitalOutput.
+    public abstract class Tag : INotifyPropertyChanged
     {
-       
         private string name;
-
         private string description;
-
+        private string ioAddress;
+        private double currentValue;
 
         #region Properties
 
@@ -40,6 +35,33 @@ namespace DataConcentrator
                 OnPropertyChanged("Description");
             }
         }
+
+        // Adresa u PLC-u (ADDR001..ADDR016).
+        public string IOAddress
+        {
+            get { return ioAddress; }
+            set
+            {
+                ioAddress = value;
+                OnPropertyChanged("IOAddress");
+            }
+        }
+
+        // Trenutna (runtime) vrednost; ne perzistira se u bazu.
+        [NotMapped]
+        public double CurrentValue
+        {
+            get { return currentValue; }
+            set
+            {
+                currentValue = value;
+                OnPropertyChanged("CurrentValue");
+            }
+        }
+
+        // Tip taga (AI/AO/DI/DO) - implementira svaki naslednik.
+        [NotMapped]
+        public abstract TagType Type { get; }
 
         #endregion
 

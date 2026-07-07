@@ -55,6 +55,13 @@
     <Compile Include="PLC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Tag.cs" />
+    <Compile Include="Model\Enums.cs" />
+    <Compile Include="Model\AnalogInput.cs" />
+    <Compile Include="Model\AnalogOutput.cs" />
+    <Compile Include="Model\DigitalInput.cs" />
+    <Compile Include="Model\DigitalOutput.cs" />
+    <Compile Include="Model\Alarm.cs" />
+    <Compile Include="Model\ActivatedAlarm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">
