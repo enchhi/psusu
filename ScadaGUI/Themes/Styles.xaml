@@ -46,8 +46,8 @@
                             <Setter TargetName="bd" Property="Background" Value="{DynamicResource AccentPressedBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource DisabledBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
+                            <!-- ista dugmad, samo izbledela (jasno "nedostupno", ista familija) -->
+                            <Setter TargetName="bd" Property="Opacity" Value="0.4"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -81,6 +81,9 @@
         <Setter Property="MinHeight" Value="26"/>
         <Setter Property="Padding" Value="6,3"/>
         <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource InputBgBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
     </Style>
 
     <Style TargetType="CheckBox">
@@ -104,6 +107,7 @@
         <Setter Property="RowHeight" Value="30"/>
         <Setter Property="ColumnHeaderHeight" Value="34"/>
         <Setter Property="FontSize" Value="13"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
     </Style>
 
     <Style TargetType="DataGridColumnHeader">

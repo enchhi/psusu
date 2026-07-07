@@ -11,20 +11,23 @@
         <Border DockPanel.Dock="Top" Background="{DynamicResource AccentBrush}" Padding="16,12">
             <TextBlock x:Name="HeaderText" Text="SCADA" Foreground="White" FontSize="17" FontWeight="SemiBold"/>
         </Border>
-        <WrapPanel DockPanel.Dock="Bottom" Margin="8">
-            <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="WriteBtn" Content="Upisi vrednost" Click="WriteValue_Click" Width="110" Height="30" Margin="4"/>
-            <Button x:Name="DetailsBtn" Content="Detalji" Click="Details_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="ScanBtn" Content="Scan on/off" Click="ToggleScan_Click" Width="100" Height="30" Margin="4"/>
-            <Button x:Name="AckBtn" Content="Acknowledge" Click="Acknowledge_Click" Width="100" Height="30" Margin="4"/>
-            <Button x:Name="ReportBtn" Content="Report" Click="Report_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="TraceBtn" Content="Trace log" Click="TraceSettings_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="ExportBtn" Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
-            <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
-            <Button x:Name="FilterBtn" Content="Pretraga" Click="Filter_Click" Width="90" Height="30" Margin="4"/>
-            <Button x:Name="OptionsBtn" Content="Opcije" Click="Settings_Click" Width="80" Height="30" Margin="4"/>
-        </WrapPanel>
+        <Border DockPanel.Dock="Bottom" Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="10,12">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="WriteBtn" Content="Upisi vrednost" Click="WriteValue_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="DetailsBtn" Content="Detalji" Click="Details_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="ScanBtn" Content="Scan on/off" Click="ToggleScan_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="AckBtn" Content="Acknowledge" Click="Acknowledge_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="ReportBtn" Content="Report" Click="Report_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="TraceBtn" Content="Trace log" Click="TraceSettings_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="ExportBtn" Content="Export" Click="Export_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="FilterBtn" Content="Pretraga" Click="Filter_Click" Width="132" Height="36" Margin="5"/>
+                <Button x:Name="OptionsBtn" Content="Opcije" Click="Settings_Click" Width="132" Height="36" Margin="5"/>
+            </WrapPanel>
+        </Border>
         <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="8">
             <DataGrid.RowStyle>
