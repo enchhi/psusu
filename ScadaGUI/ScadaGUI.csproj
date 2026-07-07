@@ -101,6 +101,14 @@
       <DependentUpon>DetailsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TraceSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="TraceSettingsWindow.xaml.cs">
+      <DependentUpon>TraceSettingsWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Converters\AlarmStatusToBrushConverter.cs" />
   </ItemGroup>
   <ItemGroup>

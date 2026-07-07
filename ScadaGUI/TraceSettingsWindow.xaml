@@ -1,0 +1,18 @@
+<Window x:Class="ScadaGUI.TraceSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Trace-bitovi (system.log)" Height="440" Width="320"
+        WindowStartupLocation="CenterOwner">
+    <DockPanel Margin="12">
+        <TextBlock DockPanel.Dock="Top" Text="Izaberi koje logove upisivati u system.log:"
+                   TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,8"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock x:Name="TraceWordText" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="Sacuvaj" Click="Save_Click" Width="90" Height="30"/>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="ChecksPanel"/>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

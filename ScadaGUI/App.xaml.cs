@@ -13,5 +13,7 @@ namespace ScadaGUI
     /// </summary>
     public partial class App : Application
     {
+        // Putanja gde se cuva traceword (F7), relativno na app folder.
+        public const string TraceWordPath = "traceword.cfg";
     }
 }

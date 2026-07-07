@@ -68,6 +68,7 @@
     <Compile Include="Logic\TagValidator.cs" />
     <Compile Include="Logic\PlcAddressMap.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\TraceWordStore.cs" />
     <Compile Include="Logic\AiHistoryStore.cs" />
     <Compile Include="Logic\ReportGenerator.cs" />
   </ItemGroup>

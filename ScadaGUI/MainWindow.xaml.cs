@@ -13,6 +13,9 @@ namespace ScadaGUI
         {
             InitializeComponent();
 
+            // F7: primeni sacuvan traceword (default = sve kategorije ukljucene).
+            Logger.Instance.TraceWord = TraceWordStore.Load(App.TraceWordPath, long.MaxValue);
+
             try
             {
                 dc.LoadFromDb();
@@ -108,6 +111,11 @@ namespace ScadaGUI
                 System.IO.File.WriteAllText(dlg.FileName, dc.GenerateReport());
                 MessageBox.Show("Report sacuvan: " + dlg.FileName);
             }
+        }
+
+        private void TraceSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new TraceSettingsWindow { Owner = this }.ShowDialog();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
