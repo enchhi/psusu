@@ -20,6 +20,11 @@ namespace ScadaGUI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            // Bez ovoga bi se app ugasila cim se login prozor zatvori (OnLastWindowClose),
+            // pre nego sto se otvori glavni prozor. Gasimo se samo eksplicitno (na kraju petlje).
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
             ThemeManager.Apply(false); // F1: podrazumevana Light tema
 
             while (true)
