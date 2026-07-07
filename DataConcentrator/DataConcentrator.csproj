@@ -66,6 +66,8 @@
     <Compile Include="Logic\DeadbandFilter.cs" />
     <Compile Include="Logic\TagValidator.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logic\AiHistoryStore.cs" />
+    <Compile Include="Logic\ReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">
