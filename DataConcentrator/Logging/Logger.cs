@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace DataConcentrator
@@ -30,7 +31,9 @@ namespace DataConcentrator
 
             lock (sync)
             {
-                writer.WriteLine($"{clock():yyyy-MM-dd HH:mm:ss} | {category} | {message}");
+                writer.WriteLine(
+                    clock().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                    + " | " + category + " | " + message);
             }
         }
 

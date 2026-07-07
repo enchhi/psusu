@@ -45,5 +45,19 @@ namespace DataConcentrator.Tests
         public void Below_Clears_AboveLimitPlusHysteresis()
             => Assert.AreEqual(AlarmState.Inactive,
                AlarmEvaluator.NextState(AlarmDirection.Below, 20, 3, 24, AlarmState.Active)); // 24 > 23
+
+        [TestMethod]
+        public void Above_ExactlyAtLimit_DoesNotActivate()
+            => Assert.AreEqual(AlarmState.Inactive,
+               AlarmEvaluator.NextState(AlarmDirection.Above, 100, 5, 100, AlarmState.Inactive)); // strogo >
+
+        [TestMethod]
+        public void Above_Reactivates_AfterClear()
+        {
+            var s = AlarmEvaluator.NextState(AlarmDirection.Above, 100, 5, 101, AlarmState.Inactive); // Active
+            s = AlarmEvaluator.NextState(AlarmDirection.Above, 100, 5, 94, s);   // Inactive (ocisceno)
+            s = AlarmEvaluator.NextState(AlarmDirection.Above, 100, 5, 101, s);  // Active ponovo
+            Assert.AreEqual(AlarmState.Active, s);
+        }
     }
 }

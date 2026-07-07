@@ -58,5 +58,31 @@ namespace DataConcentrator.Tests
             var ao = new AnalogOutput { Name = "A", IOAddress = "ADDR005", LowLimit = 0, HighLimit = 10, Units = "" };
             Assert.IsFalse(TagValidator.Validate(ao).IsValid);
         }
+
+        [TestMethod]
+        public void EmptyIOAddress_Fails()
+        {
+            var ai = new AnalogInput { Name = "T", IOAddress = "", ScanTime = 100, LowLimit = 0, HighLimit = 10, Units = "C" };
+            Assert.IsFalse(TagValidator.Validate(ai).IsValid);
+        }
+
+        [TestMethod]
+        public void IOAddress_WrongForType_Fails()
+        {
+            // ADDR010 je DO adresa, ne AI
+            var ai = new AnalogInput { Name = "T", IOAddress = "ADDR010", ScanTime = 100, LowLimit = 0, HighLimit = 10, Units = "C" };
+            Assert.IsFalse(TagValidator.Validate(ai).IsValid);
+        }
+
+        [TestMethod]
+        public void NegativeDeadband_Fails()
+        {
+            var ai = new AnalogInput { Name = "T", IOAddress = "ADDR001", ScanTime = 100, LowLimit = 0, HighLimit = 10, Units = "C", Deadband = -1 };
+            Assert.IsFalse(TagValidator.Validate(ai).IsValid);
+        }
+
+        [TestMethod]
+        public void NullTag_Fails()
+            => Assert.IsFalse(TagValidator.Validate(null).IsValid);
     }
 }

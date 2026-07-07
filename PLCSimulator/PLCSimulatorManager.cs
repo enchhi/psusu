@@ -20,6 +20,8 @@ namespace PLCSimulator
         private Thread t2;
         // Zastavica za cist prekid niti (umesto Thread.Abort koji je nepodrzan/obsolete).
         private volatile bool running = true;
+        // Jedan Random za sve pozive (poziva se pod lock-om iz analogne niti).
+        private static readonly Random random = new Random();
 
         public PLCSimulatorManager()
         {
@@ -119,7 +121,6 @@ namespace PLCSimulator
 
         private static double RandomNumberBetween(double minValue, double maxValue)
         {
-            Random random = new Random();
             var next = random.NextDouble();
             return minValue + (next * (maxValue - minValue));
         }

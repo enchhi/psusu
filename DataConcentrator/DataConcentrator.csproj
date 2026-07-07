@@ -65,6 +65,7 @@
     <Compile Include="Logic\AlarmEvaluator.cs" />
     <Compile Include="Logic\DeadbandFilter.cs" />
     <Compile Include="Logic\TagValidator.cs" />
+    <Compile Include="Logic\PlcAddressMap.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logic\AiHistoryStore.cs" />
     <Compile Include="Logic\ReportGenerator.cs" />

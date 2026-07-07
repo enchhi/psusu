@@ -25,7 +25,7 @@ namespace DataConcentrator
                     {
                         sb.AppendLine(
                             h.TagName + " | " +
-                            s.Timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " | " +
+                            s.Timestamp.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) + " | " +
                             s.Value.ToString(CultureInfo.InvariantCulture));
                     }
                 }

@@ -20,5 +20,9 @@ namespace DataConcentrator.Tests
         [TestMethod]
         public void ZeroDeadband_AnyRegister()
             => Assert.IsTrue(DeadbandFilter.IsSignificant(10, 10.0001, 0));
+
+        [TestMethod]
+        public void FirstRead_NaNOld_IsAlwaysSignificant()
+            => Assert.IsTrue(DeadbandFilter.IsSignificant(double.NaN, 5, 100));
     }
 }

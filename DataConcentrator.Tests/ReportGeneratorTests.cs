@@ -30,5 +30,12 @@ namespace DataConcentrator.Tests
             StringAssert.Contains(txt, "46");
             Assert.IsFalse(txt.Contains(" 80"));
         }
+
+        [TestMethod]
+        public void EmptyHistories_ProducesHeaderNoData()
+        {
+            var txt = ReportGenerator.Generate(new AiHistory[0]);
+            Assert.IsFalse(string.IsNullOrEmpty(txt)); // ima header, ne baca izuzetak
+        }
     }
 }

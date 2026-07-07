@@ -15,11 +15,19 @@ namespace DataConcentrator
         public static TagValidationResult Validate(Tag tag)
         {
             var r = new TagValidationResult();
+            if (tag == null)
+            {
+                r.Errors.Add("Tag je null.");
+                return r;
+            }
 
             if (string.IsNullOrWhiteSpace(tag.Name))
                 r.Errors.Add("Name je obavezan.");
+
             if (string.IsNullOrWhiteSpace(tag.IOAddress))
                 r.Errors.Add("IOAddress je obavezan.");
+            else if (!PlcAddressMap.IsValidFor(tag.Type, tag.IOAddress))
+                r.Errors.Add("IOAddress " + tag.IOAddress + " ne odgovara tipu " + tag.Type + ".");
 
             switch (tag)
             {
