@@ -279,6 +279,36 @@ namespace DataConcentrator
             return report;
         }
 
+        // F6: export/import konfiguracije svih tagova u JSON.
+        public string ExportConfigJson()
+        {
+            var json = ConfigSerializer.Export(Tags);
+            Logger.Instance.Log(LogCategory.ImportExport, "Export konfiguracije (" + Tags.Count + " tagova).");
+            return json;
+        }
+
+        public int ImportConfigJson(string json)
+        {
+            var imported = ConfigSerializer.Import(json);
+            int added = 0;
+            foreach (var t in imported)
+            {
+                if (Tags.Any(x => x.Name == t.Name)) continue; // preskoci postojece
+                try
+                {
+                    AddTag(t); // validira + DB + scan
+                    added++;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.Log(LogCategory.Error, "Import preskocio " + t.Name + ": " + ex.Message);
+                }
+            }
+            Logger.Instance.Log(LogCategory.ImportExport,
+                "Import konfiguracije: dodato " + added + " od " + imported.Count + ".");
+            return added;
+        }
+
         public void Shutdown()
         {
             PLC.StopAll();

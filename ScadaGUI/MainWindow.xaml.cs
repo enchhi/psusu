@@ -118,6 +118,38 @@ namespace ScadaGUI
             new TraceSettingsWindow { Owner = this }.ShowDialog();
         }
 
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "JSON (*.json)|*.json",
+                FileName = "konfiguracija.json"
+            };
+            if (dlg.ShowDialog() == true)
+            {
+                System.IO.File.WriteAllText(dlg.FileName, dc.ExportConfigJson());
+                MessageBox.Show("Konfiguracija izvezena: " + dlg.FileName);
+            }
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog { Filter = "JSON (*.json)|*.json" };
+            if (dlg.ShowDialog() == true)
+            {
+                try
+                {
+                    int added = dc.ImportConfigJson(System.IO.File.ReadAllText(dlg.FileName));
+                    TagsGrid.Items.Refresh();
+                    MessageBox.Show("Uvezeno tagova: " + added);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Greska pri importu: " + ex.Message);
+                }
+            }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             dc.Shutdown();

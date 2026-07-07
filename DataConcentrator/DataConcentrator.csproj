@@ -49,6 +49,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextClass.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Logging\TraceWordStore.cs" />
     <Compile Include="Logic\AiHistoryStore.cs" />
     <Compile Include="Logic\ReportGenerator.cs" />
+    <Compile Include="Logic\ConfigSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">

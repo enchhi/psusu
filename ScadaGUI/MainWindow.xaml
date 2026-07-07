@@ -17,6 +17,8 @@
             <Button Content="Acknowledge" Click="Acknowledge_Click" Width="100" Height="30" Margin="4"/>
             <Button Content="Report" Click="Report_Click" Width="90" Height="30" Margin="4"/>
             <Button Content="Trace log" Click="TraceSettings_Click" Width="90" Height="30" Margin="4"/>
+            <Button Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
+            <Button Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
         </StackPanel>
         <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="8">
