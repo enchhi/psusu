@@ -1,0 +1,23 @@
+<!--
+  Unit test projekat (MSTest) za logiku DataConcentrator-a i PLCSimulator-a.
+  Pokreće se u Visual Studio Test Explorer-u (Windows). SDK-style, net472.
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <IsPackable>false</IsPackable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.6.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../DataConcentrator/DataConcentrator.csproj" />
+    <ProjectReference Include="../PLCSimulator/PLCSimulator.csproj" />
+  </ItemGroup>
+</Project>

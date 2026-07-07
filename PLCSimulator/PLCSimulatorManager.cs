@@ -1,19 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PLCSimulator
 {
     /// <summary>
     /// PLC Simulator
-    /// 
+    ///
     /// 4 x ANALOG INPUT : ADDR001 - ADDR004
     /// 4 x ANALOG OUTPUT: ADDR005 - ADDR008
-    /// 1 x DIGITAL INPUT: ADDR009, ADDR0011-ADDR0013
-    /// 1 x DIGITAL OUTPUT: ADDR010, ADDR0014-ADDR0016
+    /// DIGITAL INPUT    : ADDR009, ADDR011 - ADDR013
+    /// DIGITAL OUTPUT   : ADDR010, ADDR014 - ADDR016
     /// </summary>
     public class PLCSimulatorManager
     {
@@ -21,125 +18,102 @@ namespace PLCSimulator
         private object locker = new object();
         private Thread t1;
         private Thread t2;
-        
+        // Zastavica za cist prekid niti (umesto Thread.Abort koji je nepodrzan/obsolete).
+        private volatile bool running = true;
+
         public PLCSimulatorManager()
         {
             addressValues = new Dictionary<string, double>();
 
-            // TODO: dodati adrese
-            // AI
-            addressValues.Add("ADDR001", 0);
-
-            // AO
-            addressValues.Add("ADDR005", 0);
-
-            // DI
-            addressValues.Add("ADDR009", 0);
-
-            // DO
-            addressValues.Add("ADDR010", 0);
- 
+            // Sve adrese ADDR001 - ADDR016 (AI 001-004, AO 005-008, DI 009/011-013, DO 010/014-016).
+            for (int i = 1; i <= 16; i++)
+            {
+                addressValues.Add("ADDR" + i.ToString("000"), 0);
+            }
         }
 
         public void StartPLCSimulator()
         {
-            t1 = new Thread(GeneratingAnalogInputs);
+            t1 = new Thread(GeneratingAnalogInputs) { IsBackground = true };
             t1.Start();
 
-            t2 = new Thread(GeneratingDigitalInputs);
+            t2 = new Thread(GeneratingDigitalInputs) { IsBackground = true };
             t2.Start();
         }
 
         private void GeneratingAnalogInputs()
         {
-            while (true)
+            while (running)
             {
-                
                 Thread.Sleep(100);
 
                 lock (locker)
                 {
-                    addressValues["ADDR001"] = 100 * Math.Sin((double)DateTime.Now.Second / 60 * Math.PI); //SINE
-                    addressValues["ADDR002"] = 100 * DateTime.Now.Second / 60; //RAMP
-                    addressValues["ADDR003"] = 50 * Math.Cos((double)DateTime.Now.Second / 60 * Math.PI); //COS
-                    addressValues["ADDR004"] = RandomNumberBetween(0, 50);  //rand
+                    addressValues["ADDR001"] = 100 * Math.Sin((double)DateTime.Now.Second / 60 * Math.PI); // SINE
+                    addressValues["ADDR002"] = 100 * DateTime.Now.Second / 60;                             // RAMP
+                    addressValues["ADDR003"] = 50 * Math.Cos((double)DateTime.Now.Second / 60 * Math.PI);  // COS
+                    addressValues["ADDR004"] = RandomNumberBetween(0, 50);                                 // RANDOM
                 }
             }
         }
 
         private void GeneratingDigitalInputs()
         {
-            while (true)
+            while (running)
             {
                 Thread.Sleep(1000);
 
                 lock (locker)
                 {
-                    if (addressValues["ADDR009"] == 0)
-                    {
-                        addressValues["ADDR009"] = 1;
-                    }
-                    else
-                    {
-                        addressValues["ADDR009"] = 0;
-                    }
-
-                    if (addressValues["ADDR011"] == 0)
-                    {
-                        addressValues["ADDR011"] = 1;
-                    }
-                    else
-                    {
-                        addressValues["ADDR011"] = 0;
-                    }
-
-                    if (addressValues["ADDR012"] == 0)
-                    {
-                        addressValues["ADDR012"] = 1;
-                    }
-                    else
-                    {
-                        addressValues["ADDR012"] = 0;
-                    }
-
-                    if (addressValues["ADDR013"] == 0)
-                    {
-                        addressValues["ADDR013"] = 1;
-                    }
-                    else
-                    {
-                        addressValues["ADDR013"] = 0;
-                    }
+                    ToggleDigital("ADDR009");
+                    ToggleDigital("ADDR011");
+                    ToggleDigital("ADDR012");
+                    ToggleDigital("ADDR013");
                 }
             }
         }
 
+        // Pomocna: 0 -> 1, 1 -> 0 (poziva se vec pod lock-om).
+        private void ToggleDigital(string address)
+        {
+            addressValues[address] = addressValues[address] == 0 ? 1 : 0;
+        }
+
         public double GetAnalogValue(string address)
         {
-            if (addressValues.ContainsKey(address))
+            lock (locker)
             {
-                return addressValues[address];
+                return addressValues.ContainsKey(address) ? addressValues[address] : -1;
             }
-            else
+        }
+
+        public double GetDigitalValue(string address)
+        {
+            lock (locker)
             {
-                return -1;
+                return addressValues.ContainsKey(address) ? addressValues[address] : -1;
             }
-            
         }
 
         public void SetAnalogValue(string address, double value)
         {
-            if (addressValues.ContainsKey(address))
+            lock (locker)
             {
-                addressValues[address] = value;
+                if (addressValues.ContainsKey(address))
+                {
+                    addressValues[address] = value;
+                }
             }
         }
 
         public void SetDigitalValue(string address, double value)
         {
-            if (addressValues.ContainsKey(address))
+            lock (locker)
             {
-                addressValues[address] = value;
+                if (addressValues.ContainsKey(address))
+                {
+                    addressValues[address] = value;
+                }
             }
         }
 
@@ -147,14 +121,12 @@ namespace PLCSimulator
         {
             Random random = new Random();
             var next = random.NextDouble();
-
             return minValue + (next * (maxValue - minValue));
         }
 
         public void Abort()
         {
-            t1.Abort();
-            t2.Abort();
+            running = false;
         }
     }
 }

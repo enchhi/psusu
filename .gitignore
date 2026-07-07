@@ -17,6 +17,9 @@ packages/
 *.ldf
 *.sdf
 
+# ---- Linux shadow test harness (samo lokalni alat, ne ide u repo) ----
+.linux-verify/
+
 # ---- Razno ----
 *.log
 [Ll]og/
