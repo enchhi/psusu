@@ -73,6 +73,9 @@
     <Compile Include="Logic\AiHistoryStore.cs" />
     <Compile Include="Logic\ReportGenerator.cs" />
     <Compile Include="Logic\ConfigSerializer.cs" />
+    <Compile Include="Model\AnalogSample.cs" />
+    <Compile Include="Logic\SampleFilter.cs" />
+    <Compile Include="Logic\SampleTxtGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">

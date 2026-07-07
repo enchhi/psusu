@@ -226,7 +226,17 @@ namespace DataConcentrator
 
             if (tag is AnalogInput ai)
             {
-                history.Record(ai.Name, DateTime.Now, value);
+                var now = DateTime.Now;
+                history.Record(ai.Name, now, value); // in-memory (za Report)
+
+                // F4/F2: uzorak i u bazu (AnalogSample tabela)
+                lock (dbLock)
+                {
+                    ContextClass.Instance.AnalogSamples.Add(
+                        new AnalogSample { TagName = ai.Name, Value = value, Timestamp = now });
+                    ContextClass.Instance.SaveChanges();
+                }
+
                 CheckAlarms(ai, value);
             }
         }
@@ -307,6 +317,19 @@ namespace DataConcentrator
             Logger.Instance.Log(LogCategory.ImportExport,
                 "Import konfiguracije: dodato " + added + " od " + imported.Count + ".");
             return added;
+        }
+
+        // F4: pretraga AI uzoraka iz baze (prazni uslovi se ignorisu).
+        public List<AnalogSample> SearchSamples(string tagName, DateTime? from, DateTime? to, double? min, double? max)
+        {
+            List<AnalogSample> all;
+            lock (dbLock)
+            {
+                all = ContextClass.Instance.AnalogSamples.ToList();
+            }
+            var result = SampleFilter.Apply(all, tagName, from, to, min, max);
+            Logger.Instance.Log(LogCategory.ImportExport, "Pretraga uzoraka: " + result.Count + " rezultata.");
+            return result;
         }
 
         public void Shutdown()

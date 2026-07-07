@@ -150,6 +150,11 @@ namespace ScadaGUI
             }
         }
 
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            new FilterWindow { Owner = this }.ShowDialog();
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             dc.Shutdown();

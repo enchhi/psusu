@@ -19,6 +19,7 @@ namespace DataConcentrator
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<ActivatedAlarm> ActivatedAlarms { get; set; }
+        public DbSet<AnalogSample> AnalogSamples { get; set; }   // F4/F2: istorija AI vrednosti
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
