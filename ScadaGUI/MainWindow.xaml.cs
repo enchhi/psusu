@@ -9,6 +9,7 @@ namespace ScadaGUI
     {
         private readonly DataConcentratorService dc = DataConcentratorService.Instance;
         private System.Windows.Threading.DispatcherTimer inactivityTimer;
+        private System.Windows.Threading.DispatcherTimer soundTimer;
 
         // true ako je admin izlogovan zbog neaktivnosti (App onda ponovo prikaze login).
         public bool LoggedOutByTimeout { get; private set; }
@@ -36,6 +37,7 @@ namespace ScadaGUI
 
             ApplyRoleRestrictions();   // F5: samo admin ima Write
             SetupInactivityLogout();   // F5: auto-logout admina posle 5 min neaktivnosti
+            SetupAlarmSound();         // F1: zvuk dok ima aktivnog alarma
         }
 
         private Tag Selected => TagsGrid.SelectedItem as Tag;
@@ -208,8 +210,34 @@ namespace ScadaGUI
             inactivityTimer.Start();
         }
 
+        // F1: zvuk alarma - svake sekunde proveri ima li aktivnog (neacknowledge-ovanog) alarma.
+        private void SetupAlarmSound()
+        {
+            soundTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            soundTimer.Tick += (s, e) => UpdateAlarmSound();
+            soundTimer.Start();
+        }
+
+        private void UpdateAlarmSound()
+        {
+            bool anyActive = dc.Tags.OfType<AnalogInput>()
+                .SelectMany(a => a.Alarms)
+                .Any(al => al.State == AlarmState.Active);
+
+            if (anyActive) AlarmSound.Start();
+            else AlarmSound.Stop();
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            new SettingsWindow { Owner = this }.ShowDialog();
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            soundTimer?.Stop();
+            inactivityTimer?.Stop();
+            AlarmSound.Stop();
             dc.Shutdown();
         }
     }

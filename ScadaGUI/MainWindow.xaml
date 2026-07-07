@@ -20,6 +20,7 @@
             <Button Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
             <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
             <Button Content="Pretraga" Click="Filter_Click" Width="90" Height="30" Margin="4"/>
+            <Button Content="Opcije" Click="Settings_Click" Width="80" Height="30" Margin="4"/>
         </WrapPanel>
         <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="8">

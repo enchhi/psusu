@@ -20,6 +20,7 @@ namespace ScadaGUI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            ThemeManager.Apply(false); // F1: podrazumevana Light tema
 
             while (true)
             {
