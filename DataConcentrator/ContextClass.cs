@@ -24,7 +24,12 @@ namespace DataConcentrator
         }
 
         // Koristi connection string "ContextClass" iz App.config (LocalDB).
-        public ContextClass() : base("name=ContextClass") { }
+        public ContextClass() : base("name=ContextClass")
+        {
+            // Ako se model promeni (npr. dodate tabele kroz feature-e), automatski ponovo
+            // napravi bazu. Zgodno u razvoju; gubi podatke, ali izbegava "model changed" gresku.
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ContextClass>());
+        }
 
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Alarm> Alarms { get; set; }
