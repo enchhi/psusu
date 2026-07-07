@@ -170,7 +170,10 @@ namespace ScadaGUI
         // F3: postavi sav tekst (jezik) + dugmad + tooltipove.
         private void ApplyLanguage()
         {
-            HeaderText.Text = Localizer.T("app.title") + "   —   " + Session.Username + " (" + Session.CurrentRole + ")";
+            HeaderText.Text = Localizer.T("app.overview");
+            UserText.Text = Session.Username;
+            RoleText.Text = Localizer.T(Session.IsAdmin ? "role.rw" : "role.ro");
+
             AddBtn.Content = Localizer.T("btn.add");
             RemoveBtn.Content = Localizer.T("btn.remove");
             WriteBtn.Content = Localizer.T("btn.write");

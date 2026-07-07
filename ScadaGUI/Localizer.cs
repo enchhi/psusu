@@ -44,6 +44,7 @@ namespace ScadaGUI
         private static readonly Dictionary<string, string> Sr = new Dictionary<string, string>
         {
             { "app.title", "SCADA Aplikacija" },
+            { "app.overview", "Pregled tagova" },
             { "btn.add", "Dodaj" }, { "btn.remove", "Ukloni" }, { "btn.write", "Upisi vrednost" },
             { "btn.details", "Detalji" }, { "btn.scan", "Scan on/off" }, { "btn.ack", "Acknowledge" },
             { "btn.report", "Report" }, { "btn.trace", "Trace log" }, { "btn.export", "Export" },
@@ -69,6 +70,7 @@ namespace ScadaGUI
         private static readonly Dictionary<string, string> En = new Dictionary<string, string>
         {
             { "app.title", "SCADA Application" },
+            { "app.overview", "Tag overview" },
             { "btn.add", "Add" }, { "btn.remove", "Remove" }, { "btn.write", "Write value" },
             { "btn.details", "Details" }, { "btn.scan", "Scan on/off" }, { "btn.ack", "Acknowledge" },
             { "btn.report", "Report" }, { "btn.trace", "Trace log" }, { "btn.export", "Export" },

@@ -2,47 +2,96 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:conv="clr-namespace:ScadaGUI.Converters"
-        Title="SCADA Aplikacija" Height="500" Width="920"
+        Title="SCADA Aplikacija" Height="640" Width="1120" MinWidth="900" MinHeight="520"
         Closing="Window_Closing">
     <Window.Resources>
         <conv:AlarmStatusToBrushConverter x:Key="AlarmBrush"/>
     </Window.Resources>
-    <DockPanel>
-        <Border DockPanel.Dock="Top" Background="{DynamicResource AccentBrush}" Padding="16,12">
-            <TextBlock x:Name="HeaderText" Text="SCADA" Foreground="White" FontSize="17" FontWeight="SemiBold"/>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="236"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===== SIDEBAR ===== -->
+        <Border Grid.Column="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0.35,1">
+                    <GradientStop Color="#4A3F9E" Offset="0"/>
+                    <GradientStop Color="#6C5CE7" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <DockPanel Margin="16,22">
+                <!-- Logo / brend -->
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" FontSize="30" Foreground="White"/>
+                    <TextBlock Text="SCADA" FontSize="23" FontWeight="Bold" Foreground="White" Margin="0,6,0,0"/>
+                    <TextBlock x:Name="UserText" Text="—" FontSize="12" Foreground="#D8D3FF" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Uloga (dno) -->
+                <Border DockPanel.Dock="Bottom" Background="#26FFFFFF" CornerRadius="8" Padding="10,7" Margin="0,12,0,0">
+                    <TextBlock x:Name="RoleText" Text="—" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- Navigacija / akcije -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,22,0,0">
+                    <StackPanel>
+                        <Button x:Name="AddBtn" Style="{StaticResource NavButton}" Tag="&#xE710;" Content="Dodaj" Click="Add_Click"/>
+                        <Button x:Name="RemoveBtn" Style="{StaticResource NavButton}" Tag="&#xE74D;" Content="Ukloni" Click="Remove_Click"/>
+                        <Button x:Name="WriteBtn" Style="{StaticResource NavButton}" Tag="&#xE70F;" Content="Upisi vrednost" Click="WriteValue_Click"/>
+                        <Button x:Name="DetailsBtn" Style="{StaticResource NavButton}" Tag="&#xE946;" Content="Detalji" Click="Details_Click"/>
+                        <Button x:Name="ScanBtn" Style="{StaticResource NavButton}" Tag="&#xE895;" Content="Scan on/off" Click="ToggleScan_Click"/>
+                        <Button x:Name="AckBtn" Style="{StaticResource NavButton}" Tag="&#xE73E;" Content="Acknowledge" Click="Acknowledge_Click"/>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="10,10"/>
+
+                        <Button x:Name="ReportBtn" Style="{StaticResource NavButton}" Tag="&#xE9F9;" Content="Report" Click="Report_Click"/>
+                        <Button x:Name="FilterBtn" Style="{StaticResource NavButton}" Tag="&#xE721;" Content="Pretraga" Click="Filter_Click"/>
+                        <Button x:Name="ExportBtn" Style="{StaticResource NavButton}" Tag="&#xEDE1;" Content="Export" Click="Export_Click"/>
+                        <Button x:Name="ImportBtn" Style="{StaticResource NavButton}" Tag="&#xE8B5;" Content="Import" Click="Import_Click"/>
+
+                        <Border Height="1" Background="#33FFFFFF" Margin="10,10"/>
+
+                        <Button x:Name="TraceBtn" Style="{StaticResource NavButton}" Tag="&#xE7C3;" Content="Trace log" Click="TraceSettings_Click"/>
+                        <Button x:Name="OptionsBtn" Style="{StaticResource NavButton}" Tag="&#xE713;" Content="Opcije" Click="Settings_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
         </Border>
-        <Border DockPanel.Dock="Bottom" Background="{DynamicResource SurfaceBrush}"
-                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="10,12">
-            <WrapPanel HorizontalAlignment="Center">
-                <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="WriteBtn" Content="Upisi vrednost" Click="WriteValue_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="DetailsBtn" Content="Detalji" Click="Details_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="ScanBtn" Content="Scan on/off" Click="ToggleScan_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="AckBtn" Content="Acknowledge" Click="Acknowledge_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="ReportBtn" Content="Report" Click="Report_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="TraceBtn" Content="Trace log" Click="TraceSettings_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="ExportBtn" Content="Export" Click="Export_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="FilterBtn" Content="Pretraga" Click="Filter_Click" Width="132" Height="36" Margin="5"/>
-                <Button x:Name="OptionsBtn" Content="Opcije" Click="Settings_Click" Width="132" Height="36" Margin="5"/>
-            </WrapPanel>
-        </Border>
-        <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                  SelectionMode="Single" Margin="8">
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="{Binding Converter={StaticResource AlarmBrush}}"/>
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="TypeCol" Header="Tip" Binding="{Binding Type}" Width="60"/>
-                <DataGridTextColumn x:Name="NameCol" Header="Naziv" Binding="{Binding Name}" Width="160"/>
-                <DataGridTextColumn x:Name="AddressCol" Header="Adresa" Binding="{Binding IOAddress}" Width="100"/>
-                <DataGridTextColumn x:Name="ValueCol" Header="Vrednost" Binding="{Binding CurrentValue}" Width="120"/>
-                <DataGridTextColumn x:Name="UnitCol" Header="Jedinica" Binding="{Binding Units}" Width="100"/>
-                <DataGridTextColumn x:Name="DescCol" Header="Opis" Binding="{Binding Description}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </DockPanel>
+
+        <!-- ===== GLAVNI DEO ===== -->
+        <DockPanel Grid.Column="1">
+            <!-- Top bar -->
+            <Border DockPanel.Dock="Top" Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="26,18">
+                <TextBlock x:Name="HeaderText" Text="Pregled tagova" FontSize="20" FontWeight="SemiBold"/>
+            </Border>
+
+            <!-- Kartica sa tabelom -->
+            <Border Margin="24" Background="{DynamicResource SurfaceBrush}" CornerRadius="12"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="#4B3F9E" Opacity="0.13" BlurRadius="22" ShadowDepth="3"/>
+                </Border.Effect>
+                <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                          SelectionMode="Single" Margin="8" BorderThickness="0" Background="Transparent">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="{Binding Converter={StaticResource AlarmBrush}}"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="TypeCol" Header="Tip" Binding="{Binding Type}" Width="70"/>
+                        <DataGridTextColumn x:Name="NameCol" Header="Naziv" Binding="{Binding Name}" Width="180"/>
+                        <DataGridTextColumn x:Name="AddressCol" Header="Adresa" Binding="{Binding IOAddress}" Width="110"/>
+                        <DataGridTextColumn x:Name="ValueCol" Header="Vrednost" Binding="{Binding CurrentValue}" Width="130"/>
+                        <DataGridTextColumn x:Name="UnitCol" Header="Jedinica" Binding="{Binding Units}" Width="100"/>
+                        <DataGridTextColumn x:Name="DescCol" Header="Opis" Binding="{Binding Description}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </DockPanel>
+    </Grid>
 </Window>
