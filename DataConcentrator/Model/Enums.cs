@@ -26,6 +26,9 @@ namespace DataConcentrator
         WriteValue = 128,
         Scan = 256,
         ImportExport = 512,
-        Error = 1024
+        Error = 1024,
+        Report = 2048,
+        AlarmRaised = 4096,
+        System = 8192
     }
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataConcentrator
 {
@@ -19,6 +20,8 @@ namespace DataConcentrator
         public string TagName { get; set; }
 
         // Stanje se menja u runtime-u -> INotifyPropertyChanged za zivu signalizaciju bojom.
+        // [NotMapped]: ne perzistira se (izbegava EF tracking iz scan niti); racuna se u radu.
+        [NotMapped]
         public AlarmState State
         {
             get { return state; }
