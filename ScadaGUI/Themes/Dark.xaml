@@ -1,10 +1,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="Window">
-        <Setter Property="Background" Value="#FF2D2D30"/>
-        <Setter Property="Foreground" Value="#FFEEEEEE"/>
-    </Style>
-    <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="#FFEEEEEE"/>
-    </Style>
+    <!-- DARK paleta (samo boje; stilovi su u Styles.xaml) -->
+    <SolidColorBrush x:Key="BgBrush" Color="#1E1E2A"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#262636"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#8B7BFF"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#9C8FFF"/>
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="#6C5CE7"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#E8E9F3"/>
+    <SolidColorBrush x:Key="MutedTextBrush" Color="#A0A3B8"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#34344A"/>
+    <SolidColorBrush x:Key="HeaderBrush" Color="#2E2E42"/>
+    <SolidColorBrush x:Key="InputBgBrush" Color="#2A2A3C"/>
+    <SolidColorBrush x:Key="GridLineBrush" Color="#303048"/>
+    <SolidColorBrush x:Key="SelectionBrush" Color="#3A3560"/>
+    <SolidColorBrush x:Key="DisabledBrush" Color="#3A3A4C"/>
 </ResourceDictionary>

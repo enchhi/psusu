@@ -8,6 +8,9 @@
         <conv:AlarmStatusToBrushConverter x:Key="AlarmBrush"/>
     </Window.Resources>
     <DockPanel>
+        <Border DockPanel.Dock="Top" Background="{DynamicResource AccentBrush}" Padding="16,12">
+            <TextBlock x:Name="HeaderText" Text="SCADA" Foreground="White" FontSize="17" FontWeight="SemiBold"/>
+        </Border>
         <WrapPanel DockPanel.Dock="Bottom" Margin="8">
             <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="90" Height="30" Margin="4"/>
             <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="90" Height="30" Margin="4"/>
