@@ -63,6 +63,7 @@
     <Compile Include="Model\Alarm.cs" />
     <Compile Include="Model\ActivatedAlarm.cs" />
     <Compile Include="Logic\AlarmEvaluator.cs" />
+    <Compile Include="Logic\DeadbandFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">
