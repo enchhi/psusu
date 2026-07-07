@@ -35,7 +35,10 @@ namespace ScadaGUI
             TagsGrid.ItemsSource = dc.Tags;
             dc.AlarmActivated += OnAlarmActivated;
 
-            ApplyRoleRestrictions();   // F5: samo admin ima Write
+            Localizer.Changed += ApplyLanguage;                 // F3: promena jezika/TZ/formata
+            TagsGrid.SelectionChanged += (s, ev) => UpdateUi(); // polish: kontekstualna dugmad
+            ApplyLanguage();                                    // postavi tekst + dugmad + tooltipove
+
             SetupInactivityLogout();   // F5: auto-logout admina posle 5 min neaktivnosti
             SetupAlarmSound();         // F1: zvuk dok ima aktivnog alarma
         }
@@ -164,19 +167,65 @@ namespace ScadaGUI
             new FilterWindow { Owner = this }.ShowDialog();
         }
 
-        // F5: samo admin ima Write; ostali samo Read (write dugmad onemogucena).
-        private void ApplyRoleRestrictions()
+        // F3: postavi sav tekst (jezik) + dugmad + tooltipove.
+        private void ApplyLanguage()
         {
-            bool w = Session.IsAdmin;
-            AddBtn.IsEnabled = w;
-            RemoveBtn.IsEnabled = w;
-            WriteBtn.IsEnabled = w;
-            ScanBtn.IsEnabled = w;
-            AckBtn.IsEnabled = w;
-            TraceBtn.IsEnabled = w;
-            ImportBtn.IsEnabled = w;
-            Title = "SCADA Aplikacija  -  " + Session.Username + " (" + Session.CurrentRole + ")"
-                    + (w ? "  [Read/Write]" : "  [Read only]");
+            AddBtn.Content = Localizer.T("btn.add");
+            RemoveBtn.Content = Localizer.T("btn.remove");
+            WriteBtn.Content = Localizer.T("btn.write");
+            DetailsBtn.Content = Localizer.T("btn.details");
+            ScanBtn.Content = Localizer.T("btn.scan");
+            AckBtn.Content = Localizer.T("btn.ack");
+            ReportBtn.Content = Localizer.T("btn.report");
+            TraceBtn.Content = Localizer.T("btn.trace");
+            ExportBtn.Content = Localizer.T("btn.export");
+            ImportBtn.Content = Localizer.T("btn.import");
+            FilterBtn.Content = Localizer.T("btn.filter");
+            OptionsBtn.Content = Localizer.T("btn.options");
+
+            TypeCol.Header = Localizer.T("col.type");
+            NameCol.Header = Localizer.T("col.name");
+            AddressCol.Header = Localizer.T("col.address");
+            ValueCol.Header = Localizer.T("col.value");
+            UnitCol.Header = Localizer.T("col.unit");
+            DescCol.Header = Localizer.T("col.desc");
+
+            UpdateUi();
+        }
+
+        // F5 (uloga) + polish (selekcija): dugme radi samo kad je upotrebljivo; tooltip objasnjava.
+        private void UpdateUi()
+        {
+            bool admin = Session.IsAdmin;
+            var sel = Selected;
+            bool hasSel = sel != null;
+            bool isInput = sel is AnalogInput || sel is DigitalInput;
+            bool isOutput = sel != null && (sel.Type == TagType.AO || sel.Type == TagType.DO);
+            bool isAi = sel is AnalogInput;
+
+            SetBtn(AddBtn, admin, admin ? "tip.add" : "role.ro");
+            SetBtn(RemoveBtn, admin && hasSel, !admin ? "role.ro" : (hasSel ? "tip.remove" : "tip.selectSignal"));
+            SetBtn(WriteBtn, admin && isOutput, !admin ? "role.ro" : (isOutput ? "tip.write" : "tip.selectSignal"));
+            SetBtn(ScanBtn, admin && isInput, !admin ? "role.ro" : (isInput ? "tip.scan" : "tip.selectSignal"));
+            SetBtn(AckBtn, admin && isAi, !admin ? "role.ro" : (isAi ? "tip.ack" : "tip.selectSignal"));
+            SetBtn(TraceBtn, admin, admin ? "tip.trace" : "role.ro");
+            SetBtn(ImportBtn, admin, admin ? "tip.import" : "role.ro");
+
+            SetBtn(DetailsBtn, isAi, isAi ? "tip.details" : "tip.selectSignal");
+            SetBtn(ReportBtn, true, "tip.report");
+            SetBtn(ExportBtn, true, "tip.export");
+            SetBtn(FilterBtn, true, "tip.filter");
+            SetBtn(OptionsBtn, true, "tip.options");
+
+            Title = Localizer.T("app.title") + "  -  " + Session.Username + " (" + Session.CurrentRole + ")  "
+                    + Localizer.T(admin ? "role.rw" : "role.ro");
+        }
+
+        private static void SetBtn(System.Windows.Controls.Button btn, bool enabled, string tipKey)
+        {
+            btn.IsEnabled = enabled;
+            btn.ToolTip = Localizer.T(tipKey);
+            System.Windows.Controls.ToolTipService.SetShowOnDisabled(btn, true); // tooltip i kad je onemoguceno
         }
 
         // F5: auto-logout admina posle 5 min neaktivnosti.
@@ -235,6 +284,7 @@ namespace ScadaGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Localizer.Changed -= ApplyLanguage;
             soundTimer?.Stop();
             inactivityTimer?.Stop();
             AlarmSound.Stop();

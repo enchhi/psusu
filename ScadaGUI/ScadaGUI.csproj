@@ -144,7 +144,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Localizer.cs" />
     <Compile Include="Converters\AlarmStatusToBrushConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

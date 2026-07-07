@@ -12,15 +12,15 @@
             <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="90" Height="30" Margin="4"/>
             <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="90" Height="30" Margin="4"/>
             <Button x:Name="WriteBtn" Content="Upisi vrednost" Click="WriteValue_Click" Width="110" Height="30" Margin="4"/>
-            <Button Content="Detalji" Click="Details_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="DetailsBtn" Content="Detalji" Click="Details_Click" Width="90" Height="30" Margin="4"/>
             <Button x:Name="ScanBtn" Content="Scan on/off" Click="ToggleScan_Click" Width="100" Height="30" Margin="4"/>
             <Button x:Name="AckBtn" Content="Acknowledge" Click="Acknowledge_Click" Width="100" Height="30" Margin="4"/>
-            <Button Content="Report" Click="Report_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="ReportBtn" Content="Report" Click="Report_Click" Width="90" Height="30" Margin="4"/>
             <Button x:Name="TraceBtn" Content="Trace log" Click="TraceSettings_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
+            <Button x:Name="ExportBtn" Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
             <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
-            <Button Content="Pretraga" Click="Filter_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Opcije" Click="Settings_Click" Width="80" Height="30" Margin="4"/>
+            <Button x:Name="FilterBtn" Content="Pretraga" Click="Filter_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="OptionsBtn" Content="Opcije" Click="Settings_Click" Width="80" Height="30" Margin="4"/>
         </WrapPanel>
         <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="8">
@@ -30,12 +30,12 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tip" Binding="{Binding Type}" Width="60"/>
-                <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="160"/>
-                <DataGridTextColumn Header="Adresa" Binding="{Binding IOAddress}" Width="100"/>
-                <DataGridTextColumn Header="Vrednost" Binding="{Binding CurrentValue}" Width="120"/>
-                <DataGridTextColumn Header="Jedinica" Binding="{Binding Units}" Width="100"/>
-                <DataGridTextColumn Header="Opis" Binding="{Binding Description}" Width="*"/>
+                <DataGridTextColumn x:Name="TypeCol" Header="Tip" Binding="{Binding Type}" Width="60"/>
+                <DataGridTextColumn x:Name="NameCol" Header="Naziv" Binding="{Binding Name}" Width="160"/>
+                <DataGridTextColumn x:Name="AddressCol" Header="Adresa" Binding="{Binding IOAddress}" Width="100"/>
+                <DataGridTextColumn x:Name="ValueCol" Header="Vrednost" Binding="{Binding CurrentValue}" Width="120"/>
+                <DataGridTextColumn x:Name="UnitCol" Header="Jedinica" Binding="{Binding Units}" Width="100"/>
+                <DataGridTextColumn x:Name="DescCol" Header="Opis" Binding="{Binding Description}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
