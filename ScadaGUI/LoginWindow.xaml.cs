@@ -15,6 +15,13 @@ namespace ScadaGUI
         {
             InitializeComponent();
             RoleCombo.SelectedIndex = 0;
+
+            // Dev pogodnost: pre-popunjena polja da se ne kuca svaki put pri testiranju.
+            // Login i validacija ostaju netaknuti - samo pritisni Enter (dugme je IsDefault).
+            // Obrisi ove tri linije kad zelis da demonstriras rucnu prijavu/registraciju.
+            UsernameBox.Text = "admin";
+            PassBox.Password = "Admin.Lozinka123!";
+            RoleCombo.SelectedIndex = 0; // Admin
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
