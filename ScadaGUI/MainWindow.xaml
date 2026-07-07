@@ -8,19 +8,19 @@
         <conv:AlarmStatusToBrushConverter x:Key="AlarmBrush"/>
     </Window.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="8">
-            <Button Content="Dodaj" Click="Add_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Ukloni" Click="Remove_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Upisi vrednost" Click="WriteValue_Click" Width="110" Height="30" Margin="4"/>
+        <WrapPanel DockPanel.Dock="Bottom" Margin="8">
+            <Button x:Name="AddBtn" Content="Dodaj" Click="Add_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="RemoveBtn" Content="Ukloni" Click="Remove_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="WriteBtn" Content="Upisi vrednost" Click="WriteValue_Click" Width="110" Height="30" Margin="4"/>
             <Button Content="Detalji" Click="Details_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Scan on/off" Click="ToggleScan_Click" Width="100" Height="30" Margin="4"/>
-            <Button Content="Acknowledge" Click="Acknowledge_Click" Width="100" Height="30" Margin="4"/>
+            <Button x:Name="ScanBtn" Content="Scan on/off" Click="ToggleScan_Click" Width="100" Height="30" Margin="4"/>
+            <Button x:Name="AckBtn" Content="Acknowledge" Click="Acknowledge_Click" Width="100" Height="30" Margin="4"/>
             <Button Content="Report" Click="Report_Click" Width="90" Height="30" Margin="4"/>
-            <Button Content="Trace log" Click="TraceSettings_Click" Width="90" Height="30" Margin="4"/>
+            <Button x:Name="TraceBtn" Content="Trace log" Click="TraceSettings_Click" Width="90" Height="30" Margin="4"/>
             <Button Content="Export" Click="Export_Click" Width="80" Height="30" Margin="4"/>
-            <Button Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
+            <Button x:Name="ImportBtn" Content="Import" Click="Import_Click" Width="80" Height="30" Margin="4"/>
             <Button Content="Pretraga" Click="Filter_Click" Width="90" Height="30" Margin="4"/>
-        </StackPanel>
+        </WrapPanel>
         <DataGrid x:Name="TagsGrid" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="8">
             <DataGrid.RowStyle>

@@ -77,6 +77,10 @@
     <Compile Include="Logic\SampleFilter.cs" />
     <Compile Include="Logic\SampleTxtGenerator.cs" />
     <Compile Include="Logic\SampleStats.cs" />
+    <Compile Include="Logic\PasswordPolicy.cs" />
+    <Compile Include="Logic\PasswordHasher.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Auth\AuthService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCSimulator\PLCSimulator.csproj">

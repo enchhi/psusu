@@ -13,6 +13,16 @@ namespace DataConcentrator
             get { return instance ?? (instance = new ContextClass()); }
         }
 
+        // Zatvori i oslobodi kontekst; sledeci Instance pravi svez (koristi se pri logout/re-login).
+        public static void Reset()
+        {
+            if (instance != null)
+            {
+                instance.Dispose();
+                instance = null;
+            }
+        }
+
         // Koristi connection string "ContextClass" iz App.config (LocalDB).
         public ContextClass() : base("name=ContextClass") { }
 
@@ -20,6 +30,7 @@ namespace DataConcentrator
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<ActivatedAlarm> ActivatedAlarms { get; set; }
         public DbSet<AnalogSample> AnalogSamples { get; set; }   // F4/F2: istorija AI vrednosti
+        public DbSet<User> Users { get; set; }                   // F5: korisnici (login)
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -80,7 +80,8 @@ namespace DataConcentrator
 
             if (instance != null)
             {
-                instance.Abort(); // gasi i generatorske niti simulatora
+                instance.Abort();   // gasi generatorske niti simulatora
+                instance = null;    // sledeci pristup pravi svez simulator (npr. posle re-login-a)
             }
         }
 

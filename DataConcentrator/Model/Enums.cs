@@ -11,6 +11,9 @@ namespace DataConcentrator
     // Stanje alarma.
     public enum AlarmState { Inactive, Active, Acknowledged }
 
+    // F5: uloge korisnika (admin ima Read/Write, ostali samo Read).
+    public enum Role { Admin, Operater, Student, Teacher }
+
     // Kategorije logova; svaka je jedan bit u trace-word masci (feature F7).
     [Flags]
     public enum LogCategory

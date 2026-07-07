@@ -8,6 +8,10 @@ namespace ScadaGUI
     public partial class MainWindow : Window
     {
         private readonly DataConcentratorService dc = DataConcentratorService.Instance;
+        private System.Windows.Threading.DispatcherTimer inactivityTimer;
+
+        // true ako je admin izlogovan zbog neaktivnosti (App onda ponovo prikaze login).
+        public bool LoggedOutByTimeout { get; private set; }
 
         public MainWindow()
         {
@@ -29,6 +33,9 @@ namespace ScadaGUI
 
             TagsGrid.ItemsSource = dc.Tags;
             dc.AlarmActivated += OnAlarmActivated;
+
+            ApplyRoleRestrictions();   // F5: samo admin ima Write
+            SetupInactivityLogout();   // F5: auto-logout admina posle 5 min neaktivnosti
         }
 
         private Tag Selected => TagsGrid.SelectedItem as Tag;
@@ -153,6 +160,52 @@ namespace ScadaGUI
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             new FilterWindow { Owner = this }.ShowDialog();
+        }
+
+        // F5: samo admin ima Write; ostali samo Read (write dugmad onemogucena).
+        private void ApplyRoleRestrictions()
+        {
+            bool w = Session.IsAdmin;
+            AddBtn.IsEnabled = w;
+            RemoveBtn.IsEnabled = w;
+            WriteBtn.IsEnabled = w;
+            ScanBtn.IsEnabled = w;
+            AckBtn.IsEnabled = w;
+            TraceBtn.IsEnabled = w;
+            ImportBtn.IsEnabled = w;
+            Title = "SCADA Aplikacija  -  " + Session.Username + " (" + Session.CurrentRole + ")"
+                    + (w ? "  [Read/Write]" : "  [Read only]");
+        }
+
+        // F5: auto-logout admina posle 5 min neaktivnosti.
+        private void SetupInactivityLogout()
+        {
+            if (!Session.IsAdmin) return;
+
+            inactivityTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMinutes(5)
+            };
+            inactivityTimer.Tick += (s, e) =>
+            {
+                inactivityTimer.Stop();
+                LoggedOutByTimeout = true;
+                Logger.Instance.Log(LogCategory.Login, "Auto-logout admina " + Session.Username + " (neaktivnost).");
+                MessageBox.Show("Izlogovani ste zbog neaktivnosti (5 minuta).", "Auto-logout");
+                Close();
+            };
+            inactivityTimer.Start();
+
+            PreviewMouseMove += (s, e) => ResetInactivity();
+            PreviewMouseDown += (s, e) => ResetInactivity();
+            PreviewKeyDown += (s, e) => ResetInactivity();
+        }
+
+        private void ResetInactivity()
+        {
+            if (inactivityTimer == null) return;
+            inactivityTimer.Stop();
+            inactivityTimer.Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

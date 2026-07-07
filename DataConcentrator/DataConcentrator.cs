@@ -338,7 +338,7 @@ namespace DataConcentrator
             lock (dbLock)
             {
                 try { ContextClass.Instance.SaveChanges(); } catch { /* ignorisi pri zatvaranju */ }
-                ContextClass.Instance.Dispose();
+                ContextClass.Reset();
             }
             Logger.Instance.Log(LogCategory.System, "Aplikacija zatvorena.");
         }

@@ -117,6 +117,15 @@
       <DependentUpon>FilterWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Session.cs" />
     <Compile Include="Converters\AlarmStatusToBrushConverter.cs" />
   </ItemGroup>
   <ItemGroup>
