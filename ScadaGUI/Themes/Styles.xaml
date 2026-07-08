@@ -36,12 +36,14 @@
 
     <Style TargetType="Window">
         <Setter Property="Background" Value="{DynamicResource BgBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"/>
     </Style>
 
+    <!-- NAMERNO bez Foreground setter-a: da tekst dugmadi/sidebar-a nasledi svoju belu boju.
+         Obican tekst nasledjuje Window.Foreground (TextBrush) i prati temu. -->
     <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
     </Style>
 
@@ -307,7 +309,7 @@
 
     <Style TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{DynamicResource HeaderBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Padding" Value="10,6"/>
         <Setter Property="BorderThickness" Value="0"/>
