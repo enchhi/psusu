@@ -1,4 +1,4 @@
-<Window x:Class="ScadaGUI.LoginWindow"
+<local:DialogWindow xmlns:local="clr-namespace:ScadaGUI" x:Class="ScadaGUI.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SCADA - Prijava" Height="300" Width="380"
@@ -28,4 +28,4 @@
         <TextBlock Foreground="{DynamicResource MutedTextBrush}" TextWrapping="Wrap" Margin="0,10,0,0"
                    Text="Novo korisnicko ime = registracija. Lozinka: min 15 karaktera, bar jedno veliko i malo slovo i specijalni karakter; ne sme postojati ista lozinka u bazi."/>
     </StackPanel>
-</Window>
+</local:DialogWindow>

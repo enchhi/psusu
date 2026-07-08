@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Session.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="DialogWindow.cs" />
     <Compile Include="AlarmSound.cs" />
     <Page Include="SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

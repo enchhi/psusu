@@ -7,7 +7,7 @@ using System.Windows.Controls;
 namespace ScadaGUI
 {
     // F1 (tema, zvuk) + F3 (jezik, format datuma, vremenska zona).
-    public partial class SettingsWindow : Window
+    public partial class SettingsWindow : DialogWindow
     {
         private bool loaded;
         private List<TimeZoneInfo> timeZones;

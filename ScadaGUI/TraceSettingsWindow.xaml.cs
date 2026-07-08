@@ -7,7 +7,7 @@ using DataConcentrator;
 namespace ScadaGUI
 {
     // F7: checkbox po log kategoriji; svaki = jedan bit traceword-a.
-    public partial class TraceSettingsWindow : Window
+    public partial class TraceSettingsWindow : DialogWindow
     {
         private readonly List<CheckBox> checks = new List<CheckBox>();
 

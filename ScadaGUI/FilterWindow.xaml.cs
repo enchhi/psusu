@@ -8,7 +8,7 @@ using DataConcentrator;
 namespace ScadaGUI
 {
     // F4: prozor za pretragu AI vrednosti iz baze + Generate TXT.
-    public partial class FilterWindow : Window
+    public partial class FilterWindow : DialogWindow
     {
         private List<AnalogSample> results = new List<AnalogSample>();
 

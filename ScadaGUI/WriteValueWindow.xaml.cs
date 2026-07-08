@@ -4,7 +4,7 @@ using DataConcentrator;
 
 namespace ScadaGUI
 {
-    public partial class WriteValueWindow : Window
+    public partial class WriteValueWindow : DialogWindow
     {
         private readonly Tag output;
 

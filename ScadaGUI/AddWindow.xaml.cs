@@ -6,7 +6,7 @@ using DataConcentrator;
 
 namespace ScadaGUI
 {
-    public partial class AddWindow : Window
+    public partial class AddWindow : DialogWindow
     {
         private readonly DataConcentratorService dc = DataConcentratorService.Instance;
 

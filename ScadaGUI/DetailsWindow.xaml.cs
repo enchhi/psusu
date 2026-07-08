@@ -10,7 +10,7 @@ using DataConcentrator;
 namespace ScadaGUI
 {
     // F2: grafik istorije selektovanog AI + linije alarma + min/max/avg.
-    public partial class DetailsWindow : Window
+    public partial class DetailsWindow : DialogWindow
     {
         private readonly AnalogInput ai;
         private List<AnalogSample> samples;

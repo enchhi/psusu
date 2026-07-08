@@ -6,7 +6,7 @@ using DataConcentrator;
 namespace ScadaGUI
 {
     // F5: login/registracija pre glavnog prozora.
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : DialogWindow
     {
         public string Username { get; private set; }
         public Role SelectedRole { get; private set; }

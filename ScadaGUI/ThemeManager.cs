@@ -53,6 +53,10 @@ namespace ScadaGUI
             var r = Application.Current.Resources;
             w.Background = (Brush)r["BgBrush"];
             w.Foreground = (Brush)r["TextBrush"];
+
+            var icon = Application.Current.TryFindResource("AppIcon") as ImageSource;
+            if (icon != null) w.Icon = icon;
+
             ApplyTitleBar(w);
         }
 
