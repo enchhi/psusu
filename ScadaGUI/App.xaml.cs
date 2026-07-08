@@ -27,6 +27,10 @@ namespace ScadaGUI
 
             ThemeManager.Apply(false); // F1: podrazumevana Light tema
 
+            // Svaki prozor (i svaki NOVI) prati temu: na Loaded mu postavi pozadinu + naslovnu traku.
+            EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
+                new RoutedEventHandler((s, ev) => ThemeManager.ApplyToWindow(s as Window)));
+
             while (true)
             {
                 var login = new LoginWindow();
