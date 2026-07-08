@@ -11,6 +11,7 @@ namespace ScadaGUI
         public WriteValueWindow(Tag outputTag)
         {
             InitializeComponent();
+            ShowMockButton = true;
             output = outputTag;
             InfoText.Text = "Upis u " + output.Name + " (" + output.Type + ", " + output.IOAddress + ")";
             ValueBox.Text = output.CurrentValue.ToString(CultureInfo.InvariantCulture);
@@ -26,6 +27,8 @@ namespace ScadaGUI
             else
                 ValueBox.Text = MockData.Double(0, 100).ToString();
         }
+
+        protected override void OnMock() => Mock_Click(this, null);
 
         private void Write_Click(object sender, RoutedEventArgs e)
         {

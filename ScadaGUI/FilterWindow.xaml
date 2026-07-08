@@ -40,7 +40,6 @@
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
             <TextBlock x:Name="CountText" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <Button Content="Mock" Click="Mock_Click" Width="80" Height="30" Margin="4"/>
             <Button Content="Pretrazi" Click="Search_Click" Width="90" Height="30" Margin="4"/>
             <Button Content="Generate TXT" Click="GenerateTxt_Click" Width="120" Height="30" Margin="4"/>
         </StackPanel>

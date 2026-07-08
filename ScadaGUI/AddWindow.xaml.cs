@@ -13,8 +13,11 @@ namespace ScadaGUI
         public AddWindow()
         {
             InitializeComponent();
+            ShowMockButton = true;
             TypeCombo.SelectedIndex = 0; // AI (pokrece i TypeCombo_SelectionChanged)
         }
+
+        protected override void OnMock() => Mock_Click(this, null);
 
         private string SelectedType => (TypeCombo.SelectedItem as ComboBoxItem)?.Content?.ToString();
 

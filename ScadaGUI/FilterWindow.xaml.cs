@@ -15,7 +15,10 @@ namespace ScadaGUI
         public FilterWindow()
         {
             InitializeComponent();
+            ShowMockButton = true;
         }
+
+        protected override void OnMock() => Mock_Click(this, null);
 
         // Dev pomoc: popuni filter nasumicnim postojecim AI tagom i sirokim vremenskim opsegom.
         // Vrednosti se ostave prazne (uslov se ignorise) da pretraga vrati sto vise rezultata.

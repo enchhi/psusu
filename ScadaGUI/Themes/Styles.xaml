@@ -423,9 +423,13 @@
                                         <TextBlock Text="{TemplateBinding Title}" Foreground="White"
                                                    FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    <Button x:Name="PART_Close" HorizontalAlignment="Right" Style="{StaticResource TitleBarButton}">
-                                        <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="11"/>
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="PART_Mock" Content="Mock" Visibility="Collapsed"
+                                                Width="62" FontSize="12" Style="{StaticResource TitleBarButton}"/>
+                                        <Button x:Name="PART_Close" Style="{StaticResource TitleBarButton}">
+                                            <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="11"/>
+                                        </Button>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                             <ContentPresenter/>
