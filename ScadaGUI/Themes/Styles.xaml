@@ -2,10 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ScadaGUI"
                     xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
-    <!--
-      Globalni izgled aplikacije. Boje iz Light.xaml/Dark.xaml preko DynamicResource,
-      pa promena teme radi uzivo. Svaki cesto koriscen kontrola ima tematizovan template.
-    -->
+    <!-- Boje dolaze iz Light.xaml/Dark.xaml preko DynamicResource pa se tema menja uzivo. -->
 
     <!-- ===== Pomocni (keyed) ===== -->
 
@@ -43,8 +40,7 @@
         <Setter Property="FontSize" Value="13"/>
     </Style>
 
-    <!-- NAMERNO bez Foreground setter-a: da tekst dugmadi/sidebar-a nasledi svoju belu boju.
-         Obican tekst nasledjuje Window.Foreground (TextBrush) i prati temu. -->
+    <!-- bez Foreground setter-a namerno, da dugmad/sidebar zadrze svoju belu boju -->
     <Style TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Segoe UI"/>
     </Style>
@@ -322,6 +318,24 @@
         <Setter Property="Padding" Value="6,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>
+        <!-- Sopstveni template da Background (alarm boja reda) provirava kroz celiju -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- Selekcija prati temu (SelectionBrush + citljiv tekst), a ne OS plavu. -->
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SelectionBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- ===== Bocni meni (sidebar): providna dugmad sa ikonom + tekstom ===== -->

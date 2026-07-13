@@ -9,7 +9,7 @@ using DataConcentrator;
 
 namespace ScadaGUI
 {
-    // F2: grafik istorije selektovanog AI + linije alarma + min/max/avg.
+    // Grafik istorije selektovanog AI + linije alarma + min/max/avg.
     public partial class DetailsWindow : DialogWindow
     {
         private readonly AnalogInput ai;
@@ -25,6 +25,9 @@ namespace ScadaGUI
             alarms = ai.Alarms.ToList();
             AlarmsGrid.ItemsSource = alarms;
 
+            // Uklanjanje alarma je write akcija -> samo admin.
+            RemoveAlarmBtn.Visibility = Session.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+
             samples = DataConcentratorService.Instance
                 .SearchSamples(ai.Name, null, null, null, null)
                 .OrderBy(s => s.Timestamp)
@@ -32,13 +35,45 @@ namespace ScadaGUI
 
             var stats = SampleStats.Compute(samples.Select(s => s.Value));
             StatsText.Text = stats.Count == 0
-                ? "Nema uzoraka u bazi (pusti skeniranje pa otvori ponovo)."
+                ? Localizer.T("details.nosamples")
                 : string.Format(CultureInfo.InvariantCulture,
                     "Uzoraka: {0}    Min: {1:0.##}    Max: {2:0.##}    Avg: {3:0.##}",
                     stats.Count, stats.Min, stats.Max, stats.Average);
 
             ChartCanvas.SizeChanged += (s, e) => DrawChart();
             Loaded += (s, e) => DrawChart();
+
+            ApplyLanguage();
+            Localizer.Changed += ApplyLanguage;
+            this.Closed += (s, e) => Localizer.Changed -= ApplyLanguage;
+        }
+
+        private void ApplyLanguage()
+        {
+            Title = Localizer.T("details.title");
+            AlarmsLabel.Text = Localizer.T("details.alarms");
+            RemoveAlarmBtn.Content = Localizer.T("details.removealarm");
+            RemoveAlarmBtn.ToolTip = Localizer.T("details.tip.removealarm");
+            LimitColumn.Header = Localizer.T("details.col.limit");
+            DirectionColumn.Header = Localizer.T("details.col.direction");
+            MessageColumn.Header = Localizer.T("details.col.message");
+            StateColumn.Header = Localizer.T("details.col.state");
+        }
+
+        // Uklanjanje selektovanog alarma sa ovog AI.
+        private void RemoveAlarm_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(AlarmsGrid.SelectedItem is Alarm a))
+            {
+                MessageBox.Show("Izaberite alarm iz liste.");
+                return;
+            }
+
+            DataConcentratorService.Instance.RemoveAlarm(a.Id);
+            alarms = ai.Alarms.ToList();
+            AlarmsGrid.ItemsSource = alarms;
+            AlarmsGrid.Items.Refresh();
+            DrawChart();
         }
 
         private void DrawChart()

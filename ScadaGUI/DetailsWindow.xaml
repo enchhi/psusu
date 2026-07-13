@@ -12,13 +12,16 @@
         <DockPanel Grid.Column="0" Margin="0,0,8,0">
             <TextBlock x:Name="HeaderText" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,6"/>
             <TextBlock x:Name="StatsText" DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,0,0,8"/>
-            <TextBlock DockPanel.Dock="Top" Text="Alarmi:" FontWeight="Bold" Margin="0,0,0,4"/>
-            <DataGrid x:Name="AlarmsGrid" AutoGenerateColumns="False" IsReadOnly="True">
+            <TextBlock x:Name="AlarmsLabel" DockPanel.Dock="Top" Text="Alarmi:" FontWeight="Bold" Margin="0,0,0,4"/>
+            <Button x:Name="RemoveAlarmBtn" DockPanel.Dock="Bottom" Content="Ukloni alarm"
+                    Height="30" Margin="0,8,0,0" Click="RemoveAlarm_Click"/>
+            <DataGrid x:Name="AlarmsGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                      SelectionMode="Single">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Granica" Binding="{Binding LimitValue}"/>
-                    <DataGridTextColumn Header="Smer" Binding="{Binding Direction}"/>
-                    <DataGridTextColumn Header="Poruka" Binding="{Binding Message}" Width="*"/>
-                    <DataGridTextColumn Header="Stanje" Binding="{Binding State}"/>
+                    <DataGridTextColumn x:Name="LimitColumn" Header="Granica" Binding="{Binding LimitValue}"/>
+                    <DataGridTextColumn x:Name="DirectionColumn" Header="Smer" Binding="{Binding Direction}"/>
+                    <DataGridTextColumn x:Name="MessageColumn" Header="Poruka" Binding="{Binding Message}" Width="*"/>
+                    <DataGridTextColumn x:Name="StateColumn" Header="Stanje" Binding="{Binding State}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

@@ -18,7 +18,7 @@ namespace ScadaGUI
         {
             InitializeComponent();
 
-            // F7: primeni sacuvan traceword (default = sve kategorije ukljucene).
+            // Primeni sacuvan traceword (default = sve kategorije ukljucene).
             Logger.Instance.TraceWord = TraceWordStore.Load(App.TraceWordPath, long.MaxValue);
 
             try
@@ -35,20 +35,30 @@ namespace ScadaGUI
             TagsGrid.ItemsSource = dc.Tags;
             dc.AlarmActivated += OnAlarmActivated;
 
-            Localizer.Changed += ApplyLanguage;                 // F3: promena jezika/TZ/formata
-            TagsGrid.SelectionChanged += (s, ev) => UpdateUi(); // polish: kontekstualna dugmad
+            Localizer.Changed += ApplyLanguage;                 // promena jezika/TZ/formata
+            TagsGrid.SelectionChanged += (s, ev) => UpdateUi(); // kontekstualna dugmad
             ApplyLanguage();                                    // postavi tekst + dugmad + tooltipove
 
-            SetupInactivityLogout();   // F5: auto-logout admina posle 5 min neaktivnosti
-            SetupAlarmSound();         // F1: zvuk dok ima aktivnog alarma
+            SetupInactivityLogout();   // auto-logout admina posle 5 min neaktivnosti
+            SetupAlarmSound();         // zvuk dok ima aktivnog alarma
         }
 
         private Tag Selected => TagsGrid.SelectedItem as Tag;
 
-        // Alarm se aktivira iz scan niti -> osvezi prikaz na UI niti.
+        // Alarm se aktivira iz scan niti. Na UI niti procitamo aktivirani alarm iz baze
+        // po prosledjenom ID-u i prikazemo ga (baner), pa osvezimo tabelu.
         private void OnAlarmActivated(int alarmId)
         {
-            Dispatcher.BeginInvoke(new Action(() => TagsGrid.Items.Refresh()));
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var act = dc.GetActivatedAlarm(alarmId);
+                if (act != null)
+                {
+                    LastAlarmText.Text = act.Message + "  -  " + act.TagName + "  @ " + Localizer.FormatTime(act.Timestamp);
+                    LastAlarmBanner.Visibility = Visibility.Visible;
+                }
+                TagsGrid.Items.Refresh();
+            }));
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -167,7 +177,7 @@ namespace ScadaGUI
             new FilterWindow { Owner = this }.ShowDialog();
         }
 
-        // F3: postavi sav tekst (jezik) + dugmad + tooltipove.
+        // Postavi sav tekst (jezik) + dugmad + tooltipove.
         private void ApplyLanguage()
         {
             HeaderText.Text = Localizer.T("app.overview");
@@ -197,7 +207,7 @@ namespace ScadaGUI
             UpdateUi();
         }
 
-        // F5 (uloga) + polish (selekcija): dugme radi samo kad je upotrebljivo; tooltip objasnjava.
+        // Dugme radi samo kad je upotrebljivo (uloga + selekcija); tooltip objasnjava.
         private void UpdateUi()
         {
             bool admin = Session.IsAdmin;
@@ -232,7 +242,7 @@ namespace ScadaGUI
             System.Windows.Controls.ToolTipService.SetShowOnDisabled(btn, true); // tooltip i kad je onemoguceno
         }
 
-        // F5: auto-logout admina posle 5 min neaktivnosti.
+        // Auto-logout admina posle 5 min neaktivnosti.
         private void SetupInactivityLogout()
         {
             if (!Session.IsAdmin) return;
@@ -263,7 +273,7 @@ namespace ScadaGUI
             inactivityTimer.Start();
         }
 
-        // F1: zvuk alarma - svake sekunde proveri ima li aktivnog (neacknowledge-ovanog) alarma.
+        // Zvuk alarma - svake sekunde proveri ima li aktivnog (neacknowledge-ovanog) alarma.
         private void SetupAlarmSound()
         {
             soundTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };

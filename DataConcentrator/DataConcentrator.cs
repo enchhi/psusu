@@ -167,6 +167,19 @@ namespace DataConcentrator
             }
         }
 
+        // Cita poslednji aktivirani alarm iz baze po ID-u alarma.
+        // GUI ga poziva u obradi event-a AlarmActivated da prikaze informacije o alarmu.
+        public ActivatedAlarm GetActivatedAlarm(int alarmId)
+        {
+            lock (dbLock)
+            {
+                return ContextClass.Instance.ActivatedAlarms
+                    .Where(a => a.AlarmId == alarmId)
+                    .OrderByDescending(a => a.Timestamp)
+                    .FirstOrDefault();
+            }
+        }
+
         #endregion
 
         #region Pisanje u izlaze
@@ -229,7 +242,7 @@ namespace DataConcentrator
                 var now = DateTime.Now;
                 history.Record(ai.Name, now, value); // in-memory (za Report)
 
-                // F4/F2: uzorak i u bazu (AnalogSample tabela)
+                // uzorak i u bazu (AnalogSample tabela)
                 lock (dbLock)
                 {
                     ContextClass.Instance.AnalogSamples.Add(
@@ -289,7 +302,7 @@ namespace DataConcentrator
             return report;
         }
 
-        // F6: export/import konfiguracije svih tagova u JSON.
+        // export/import konfiguracije svih tagova u JSON.
         public string ExportConfigJson()
         {
             var json = ConfigSerializer.Export(Tags);
@@ -319,7 +332,7 @@ namespace DataConcentrator
             return added;
         }
 
-        // F4: pretraga AI uzoraka iz baze (prazni uslovi se ignorisu).
+        // pretraga AI uzoraka iz baze (prazni uslovi se ignorisu).
         public List<AnalogSample> SearchSamples(string tagName, DateTime? from, DateTime? to, double? min, double? max)
         {
             List<AnalogSample> all;
